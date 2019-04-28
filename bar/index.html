@@ -38,26 +38,26 @@
 
 <body>
   <main class="container">
-    <h1 id="title">Pie · 饼图</h1>
+    <h1 id="title">Bar · 柱图</h1>
     <div id="chart"></div>
   </main>
 
   <script src="../scripts/d3.v5.js"></script>
   <script>
     const option = {
-      title: '饼图',
-      type: 'pie',
+      title: '柱图',
+      type: 'bar',
       width: 200,
       height: 200,
       margin: {
         top: 10,
-        bottom: 10,
-        left: 10,
+        bottom: 20,
+        left: 20,
         right: 10
       },
-      innerRadius: 50,
       backgroundColor: '#eee',
       data: [1, 2, 3, 4, 5],
+      fontSize: 14
     }
 
     const computeOption = ({
@@ -72,19 +72,16 @@
     }) => {
       const mainWidth = width - left - right
       const mainHeight = height - top - bottom
-      const outerRadius = Math.floor(Math.min(mainWidth, mainHeight) / 2)
 
       return {
         mainWidth,
         mainHeight,
-        outerRadius
       }
     }
 
 
     const {
       data,
-      innerRadius,
       title,
       width,
       height,
@@ -95,75 +92,29 @@
     const {
       mainWidth,
       mainHeight,
-      outerRadius
     } = computeOption(option)
 
-    const arcPath = d3.arc()
-      .innerRadius(innerRadius)
-      .outerRadius(outerRadius)
-      .startAngle(d => d.startAngle)
-      .endAngle(d => d.endAngle)
+    const titleSelection = d3.select('#title')
+    const chartSelection = d3.select('#chart')
 
-    const pie = d3.pie()
-      .startAngle(0)
-      .endAngle(Math.PI * 2)
-      .value(d => d)
+    const svg = chartSelection.append('svg')
+    const g = svg.append('g')
 
-    function init() {
-      const titleSelection = d3.select('#title')
-      const chartSelection = d3.select('#chart')
-
-      const svg = chartSelection.append('svg')
-      const g = svg.append('g')
-
-      let arcs = g.selectAll('.arc')
-
-      function updateTitle() {
-        titleSelection
-          .text(title)
-      }
-
-      function updateSvg() {
-        svg
-          .attr('width', '100%')
-          .attr('height', '100%') // 加上百分百宽高才能随页面缩放而完整缩放
-          .attr('viewBox', `0 0 ${width} ${height}`)
-          .attr('preserveAspectRatio', 'xMidYMid meet')
-          .style('background-color', backgroundColor)
-
-        g
-          .attr('transform', `translate(${width/2}, ${height/2})`)
-      }
-
-      function drawArcs() {
-        arcs = arcs
-          .data(pie(data))
-
-        arcs.exit()
-          .remove()
-
-        arcs = arcs.enter()
-          .append('path')
-          .attr('class', 'arc')
-          .merge(arcs)
-          .attr('d', arcPath)
-          .attr('fill', 'red')
-          .attr('stroke', '#000')
-      }
-
-      function render() {
-        updateTitle()
-        updateSvg()
-        drawArcs()
-      }
-
-      render()
-
-      return render
+    function updateTitle() {
+      titleSelection
+        .text(title)
     }
 
-    const update = init()
+    function updateSvg() {
+      svg
+        .attr('width', '100%')
+        .attr('height', '100%') // 加上百分百宽高才能随页面缩放而完整缩放
+        .attr('viewBox', `0 0 ${width} ${height}`)
+        .attr('preserveAspectRatio', 'xMidYMid meet')
+        .style('background-color', backgroundColor)
+    }
   </script>
+  <script src="./bar.js"></script>
 </body>
 
 </html>
