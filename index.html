@@ -7,20 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>charts</title>
   <style>
-    ol {
-      padding: 0;
-    }
-
-    .main {
-      margin: 50px auto 0;
-    }
-
     h2 {
       margin: 10px 0;
-      padding-left: 100px;
+      text-align: center;
     }
 
-    #nav {
+    /* #nav {
       padding-left: 120px;
     }
 
@@ -30,19 +22,52 @@
 
     #nav a {
       /* text-decoration: none;  */
+    /* color: blue; */
+    /* } */
+
+    .lists {
+      width: 960px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: stretch;
+    }
+
+    .lists>section {
+      width: 50%;
+      border: 1px solid #000;
+    }
+    .lists>section:first-child {
+      border-right: none;
+    }
+
+    ol {
+      padding: 0 50px 0;
+    }
+
+    li {
+      padding: 5px 0;
+    }
+
+    a {
       color: blue;
     }
   </style>
 </head>
 
 <body>
-  <div class="main">
-    <h2>图表分类：</h2>
-    <ol id="nav"></ol>
+  <div class="lists">
+    <section>
+      <h2>svg图表</h2>
+      <ol id="nav"></ol>
+    </section>
+    <section>
+      <h2>canvas图表</h2>
+      <ol id="nav-for-canvas"></ol>
+    </section>
   </div>
 
   <script>
-    const routes = [{
+    const svgRoutes = [{
         name: '饼图',
         url: './pie'
       },
@@ -53,16 +78,35 @@
       {
         name: '折线图',
         url: './line'
+      },
+      {
+        name: '散点图',
+        url: './scatter'
+      }
+    ]
+
+    const canvasRoutes = [
+      {
+        name: '散点图',
+        url: './scatter'
       }
     ]
 
     const nav = document.getElementById('nav')
+    const navForCanvas = document.getElementById('nav-for-canvas')
 
-    const linkItems = routes.map(route => {
-      return `<li><a href="${route.url}/index.html" target="_blank">${route.name}</a></li>`
-    })
 
-    nav.innerHTML = linkItems.join('')
+    function renderLinks(svgRoutes, el, isCanvas=false) {
+      const linkItems = svgRoutes.map(route => {
+        return `<li><a href="${route.url}/${isCanvas ? 'canvas' : 'index'}.html" target="_blank">${route.name}</a></li>`
+      })
+
+      el.innerHTML = linkItems.join('')
+    }
+
+    renderLinks(svgRoutes, nav, false)
+    renderLinks(canvasRoutes, navForCanvas, true)
+    
   </script>
 </body>
 

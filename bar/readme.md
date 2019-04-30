@@ -22,3 +22,5 @@ d3.axisBottom()
 ```
 
 ## d3.axisLeft()
+
+## svg:rect
