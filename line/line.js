@@ -10,6 +10,7 @@ function init() {
   const line = d3.line()
     .x((d, i) => xScale(i))
     .y(d => yScale(d))
+    .defined(d => !!d || d === 0)
 
   function drawLine() {
     g

@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>线图</title>
+  <title>饼图-canvas</title>
   <style>
     html,
     body {
@@ -29,10 +29,6 @@
       height: 60%;
       overflow: hidden;
     }
-
-    svg {
-      background: #000;
-    }
   </style>
 </head>
 
@@ -44,16 +40,22 @@
 
   <script src="../scripts/d3.v5.js"></script>
   <script>
+    const titleSelection = d3.select('#title')
+    const chartSelection = d3.select('#chart')
+
+    const canvas = chartSelection.append('canvas').node()
+    const ctx = canvas.getContext('2d')
+
     const option = {
-      title: '线图',
-      type: 'line',
-      width: 200,
-      height: 200,
+      title: '饼图-canvas',
+      type: 'pie-canvas',
+      width: chartSelection.node().getBoundingClientRect().width,
+      height: chartSelection.node().getBoundingClientRect().height,
       margin: {
-        top: 10,
-        bottom: 20,
-        left: 20,
-        right: 10
+        top: 20,
+        bottom: 40,
+        left: 30,
+        right: 20
       },
       backgroundColor: '#eee',
       data: [7, 2, 4, 9, 0, 8, 4, 8],
@@ -94,31 +96,19 @@
       mainHeight,
     } = computeOption(option)
 
-    const titleSelection = d3.select('#title')
-    const chartSelection = d3.select('#chart')
-
-    const svg = chartSelection.append('svg')
-    const g = svg.append('g')
 
     function updateTitle() {
       titleSelection
         .text(title)
     }
 
-    function updateSvg() {
-      svg
-        .attr('width', '100%')
-        .attr('height', '100%') // 加上百分百宽高才能随页面缩放而完整缩放
-        .attr('viewBox', `0 0 ${width} ${height}`)
-        .attr('preserveAspectRatio', 'xMidYMid meet')
-        .style('background-color', backgroundColor)
-
-      g
-        .attr('transform', `translate(${margin.left}, ${margin.top})`)
-
+    function updateCanvas() {
+      canvas.width = width
+      canvas.height = height
+      canvas.style.backgroundColor = backgroundColor
     }
   </script>
-  <script src="./line.js"></script>
+  <script src="./line-canvas.js"></script>
 </body>
 
 </html>
