@@ -4,9 +4,39 @@
 
 `d3.arc` 返回路径生成函数，用来创建 path 路径字符串。
 
-## d3.pie
+### @init
+- d3.arc
 
+### @config
+- arc.innerRadius
+- arc.outerRadius
+- arc.cornerRadius
+- arc.startAngle
+- arc.endAngle
+- arc.padAngle
+- arc.padRadius
+- arc.context
+
+### @compute
+- arc
+- arc.centroid
+
+## d3.pie
 将数组转换成饼图绘图数据
+
+### @init
+- d3.pie
+
+### @config
+- pie.value
+- pie.sort
+- pie.sortValues
+- pie.startAngle
+- pie.endAngle
+- pie.padAngle
+
+### @compute
+- pie
 
 ## viewBox && preserveAspectRatio
 
