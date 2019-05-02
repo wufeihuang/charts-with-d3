@@ -24,3 +24,11 @@ d3.axisBottom()
 ## d3.axisLeft()
 
 ## svg:rect
+
+## canvas
+- ctx.rect(x, y, width, height)
+- ctx.fillRect()
+- ctx.strokeRect()
+- ctx.clearRect()
+
+strokeRect和fillRect绘制后不会再被fill和stroke方法影响。
